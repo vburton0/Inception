@@ -3,7 +3,7 @@
 
 # Docker
     # Commande
-    - docker build -t nginx .
+    - docker build <folder_location> -t nginx .
         - build image with name nginx
     - docker image ls
         - Show the images
@@ -11,6 +11,16 @@
         - Run an image and open his terminal (with -it)
     - docker ps
         - Show the running containers
+
+    # .yml command
+    - docker-compose -f  <path_docker_compose>  -d —build
+        - Build the .yml file
+    - docker-compose -f  <path_docker_compose>  stop
+        - Stop 
+    - docker-compose -f  <path_docker_compose>  down -v
+        - Delete
+
+
     
 
 # Sources
