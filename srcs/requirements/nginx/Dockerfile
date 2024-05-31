@@ -1,18 +1,18 @@
-FROM debian:buster
+FROM debian:bullseye
 
-# Install Nginx
-# Update the package list and install nginx and -y flag to avoid prompt
-RUN apt update                  
-RUN apt install -y nginx        
+RUN apt-get update && apt-get install -y \
+  nginx \
+  openssl \
+  && rm -rf /var/lib/apt/lists/*
 
-# Install tools
-RUN apt install vim -y          
-RUN apt install curl -y
+RUN rm /etc/nginx/sites-enabled/default
+COPY conf/nginx.conf /etc/nginx/sites-enabled/
 
-# Certificates : create a self-signed certificate
-RUN mkdir -p /etc/nginx/ssl
-RUN apt install openssl -y
-RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=login.42.fr/UID=login"
+RUN mkdir -p /etc/nginx/ssl && openssl req -x509 \
+            -sha256 -days 356 \
+            -nodes \
+            -newkey rsa:2048 \
+            -subj "/CN=viburton.42.fr/C=FR/L=Paris/O=viburton@42" \
+            -keyout /etc/nginx/ssl/inception.key -out /etc/nginx/ssl/inception.crt
 
-# Copy the configuration file
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

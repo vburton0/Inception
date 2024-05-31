@@ -44,14 +44,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: '/home/aburnott/data/wordpress'
+      device: '/Users/victorburton/inception/data/wordpress'
 
   inception_db_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: '/home/aburnott/data/mariadb'
+      device: '/Users/victorburton/inception/data/mariadb'
 
 networks:
   inception_net:
