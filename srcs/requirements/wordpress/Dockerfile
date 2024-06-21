@@ -1,6 +1,7 @@
 FROM debian:bullseye
 
-RUN apt-get update -y && apt-get install -y \
+RUN apt-get update -y
+RUN apt-get install -y \
   wget \
   php7.4-fpm \
   php7.4 \
@@ -21,7 +22,8 @@ RUN apt-get update -y && apt-get install -y \
 RUN mkdir /app
 WORKDIR /app
 
-RUN groupadd wordpress && useradd -g wordpress wordpress
+RUN groupadd wordpress
+RUN useradd -g wordpress wordpress
 
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
   && chmod +x wp-cli.phar \
